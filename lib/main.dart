@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/mock_data/pokemon_mock_data.dart';
 import 'package:pokedex/widgets/pokemon_card.dart';
 import 'package:pokedex/widgets/top_bar.dart';
-import 'package:pokedex/model/pokemon/pokemon.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Pokedex',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -30,71 +31,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _pokemonsGridWidget = Expanded(
+    child: GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        childAspectRatio: 0.8,
+      ),
+      itemCount: PokemonMockData.pokemons.length,
+      itemBuilder: (cont, index) {
+        return PokemonCard(index: index);
+      },
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                SizedBox(height: 16),
-                const TopBar(),
-                SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PokemonCard(
-                      pokemon: Pokemon.bulbasaur,
-                    ),
-                    SizedBox(width: 8),
-                    PokemonCard(
-                      pokemon: Pokemon.charmander,
-                    ),
-                    SizedBox(width: 8),
-                    PokemonCard(
-                      pokemon: Pokemon.squirtle,
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PokemonCard(
-                      pokemon: Pokemon.butterfree,
-                    ),
-                    SizedBox(width: 8),
-                    PokemonCard(
-                      pokemon: Pokemon.pikachu,
-                    ),
-                    SizedBox(width: 8),
-                    PokemonCard(
-                      pokemon: Pokemon.gastly,
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PokemonCard(
-                      pokemon: Pokemon.ditto,
-                    ),
-                    SizedBox(width: 8),
-                    PokemonCard(
-                      pokemon: Pokemon.mew,
-                    ),
-                    SizedBox(width: 8),
-                    PokemonCard(
-                      pokemon: Pokemon.aron,
-                    )
-                  ],
-                ),
-              ],
-            ),
-          )
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              SizedBox(height: 16),
+              const TopBar(),
+              SizedBox(height: 16),
+              _pokemonsGridWidget,
+            ],
+          ),
+        ),
       ),
     );
   }
-
 }
