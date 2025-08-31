@@ -76,7 +76,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _imageWidget = SizedBox(
+    final imageWidget = SizedBox(
       width: 200,
       height: 200,
       child: Image.network(pokemon.imgUrl),
@@ -130,7 +130,7 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
         ),
         SizedBox(width: 44),
-        _imageWidget,
+        imageWidget,
         SizedBox(width: 44),
         Visibility(
           visible: currentIndex < PokemonMockData.pokemons.length - 1,
